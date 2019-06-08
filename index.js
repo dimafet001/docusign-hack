@@ -64,12 +64,13 @@ async function openSigningCeremonyController (req, res) {
 //|||||||||||||||||||||||||||||||||||||||||||||||||||||||
   // fs.writeFileSync("/contracts/test.txt", "synchronous write!")
 
+  // TODOHACK: Create parsing data function
   fs.writeFile(__dirname + "/contracts/test.txt", "WORKS", (err) => {
     if (err) console.log(err);
     console.log("Successfully Written to File.");
   });
   // const fileName = 'demo_documents/World_Wide_Corp_lorem.pdf';
-  const fileName = __dirname + '/contracts/test.txt';
+  const fileName = 'contracts/test.txt';
 
 
 
@@ -92,7 +93,7 @@ async function openSigningCeremonyController (req, res) {
 
   // Create the document request object
   const doc = docusign.Document.constructFromObject({documentBase64: pdfBase64,
-        fileExtension: 'pdf',  // You can send other types of documents too.
+        fileExtension: 'TXT',  // You can send other types of documents too.
         name: 'Sample document', documentId: '1'});
 
   // Create a documents object array for the envelope definition and add the doc object
