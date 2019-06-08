@@ -29,6 +29,7 @@ const docusign = require('docusign-esign')
     , express = require('express')
     , envir = process.env
     ;
+const { promisify } = require('util')
 
 // baseUrl is the url of the application's web server. Eg http://localhost:3000
 // In some cases, this example can determine the baseUrl automatically.
@@ -64,11 +65,6 @@ async function openSigningCeremonyController (req, res) {
 //|||||||||||||||||||||||||||||||||||||||||||||||||||||||
   // fs.writeFileSync("/contracts/test.txt", "synchronous write!")
 
-  // TODOHACK: Create parsing data function
-  fs.writeFile(__dirname + "/contracts/test.txt", "WORKS", (err) => {
-    if (err) console.log(err);
-    console.log("Successfully Written to File.");
-  });
   // const fileName = 'demo_documents/World_Wide_Corp_lorem.pdf';
   const fileName = 'contracts/test.txt';
 
@@ -170,7 +166,12 @@ async function openSigningCeremonyController (req, res) {
 const port = process.env.PORT || 3000
     , host = process.env.HOST || 'localhost'
     , app = express()
-       .post('/', openSigningCeremonyController)
+       .post('/', async (req, res) => {
+         console.log("!!!Before");
+         await parseJSON()
+         console.log("!!!After");
+         openSigningCeremonyController(req, res)
+       })
        .get('/', (req, res) => {
          res.send(`<html lang="en"><body><form action="${req.url}" method="post">
           <input type="submit" value="Sign the document!"
@@ -189,6 +190,20 @@ if (baseUrl == '{BASE_URL}') {
   if (process.env.PROJECT_DOMAIN) {
     // Running on glitch.com!
     baseUrl = `https://${process.env.PROJECT_DOMAIN}.glitch.me`
+  }
+}
+
+
+// We need this to write to file before sending it
+const writeFileAsync = promisify(fs.writeFile)
+
+async function parseJSON() {
+    // TODOHACK: Create parsing data function
+
+  try {
+    await writeFileAsync(__dirname + "/contracts/test.txt", "WORKS", (e) => {console.log(e)})
+  } catch(e) {
+    console.log(e)
   }
 }
 
