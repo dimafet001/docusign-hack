@@ -29,7 +29,6 @@ const docusign = require('docusign-esign')
     , express = require('express')
     , envir = process.env
     ;
-const jsPDF = require('jspdf/dist/jspdf.node.min')
 
 // baseUrl is the url of the application's web server. Eg http://localhost:3000
 // In some cases, this example can determine the baseUrl automatically.
@@ -60,13 +59,19 @@ async function openSigningCeremonyController (req, res) {
                                       // https://developers.docusign.com/esign-rest-api/reference/Envelopes/EnvelopeViews/createRecipient
 
   // The document to be signed. Path is relative to the root directory of this repo.
-  // TODOHACK: Create a document from JSON and save it in files
-  var customContract = new jsPDF()
+  
 
-  customContract.text('Works!', 10, 10)
-  customContract.save('pdf/a4.pdf')
+//|||||||||||||||||||||||||||||||||||||||||||||||||||||||
+  // fs.writeFileSync("/contracts/test.txt", "synchronous write!")
+
+  fs.writeFile("/contracts/test.txt", "WORKS", (err) => {
+    if (err) console.log(err);
+    console.log("Successfully Written to File.");
+  });
   // const fileName = 'demo_documents/World_Wide_Corp_lorem.pdf';
-  const fileName = 'pdf/a4.pdf';
+  const fileName = '/contracts/test.txt';
+
+
 
   ////////////////////////////////////////////////////////////////////////////////
   ////////////////////////////////////////////////////////////////////////////////
@@ -87,7 +92,7 @@ async function openSigningCeremonyController (req, res) {
 
   // Create the document request object
   const doc = docusign.Document.constructFromObject({documentBase64: pdfBase64,
-        fileExtension: 'pdf',  // You can send other types of documents too.
+        fileExtension: 'txt',  // You can send other types of documents too.
         name: 'Sample document', documentId: '1'});
 
   // Create a documents object array for the envelope definition and add the doc object
