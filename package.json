@@ -1,7 +1,7 @@
 {
-  "name": "DocuSign_quick_start_node_embed_signing_ceremony",
-  "version": "1.1.0",
-  "description": "DocuSign simple node embed signing ceremony",
+  "name": "Coexist server",
+  "version": "0.1",
+  "description": "Coexist server",
   "main": "index.js",
   "scripts": {
     "debug": "node  --inspect-brk index.js",
@@ -9,16 +9,16 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/docusign-hackathons/eg"
+    "url": "https://github.com/dimafet001/docusign-hack"
   },
-  "author": "DocuSign",
+  "author": "Coexist",
   "license": "MIT",
-  "homepage": "https://github.com/docusign/eg-01-node-jwt#readme",
+  "homepage": "https://github.com/dimafet001/docusign-hack",
   "engines": {
     "node": ">=8.10"
   },
   "dependencies": {
-    "docusign-esign": "^4.2.1",
+    "Coexist": "^4.2.1",
     "express": "^4.16.4",
     "fs": "0.0.1-security",
     "jspdf": "^1.5.3"
